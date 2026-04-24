@@ -8,32 +8,24 @@ public class App {
     public static void main(String[] args) {
 //        printNTimes(3, "text");
 
-//        int[] arr1 = {1, 2, 3, 4, 5, 6, 7};
+        int[] arr1 = {1, 2, 3, 4, 5, 6, 7};
 //        sumArray(arr1);
+//        fillArray(arr1, -1);
+//        increaseElements(arr1, 10);
+//        compareArrayHalves(arr1);
 
-//        int[] arr2 = {1, 2, 3, 4, 5, 6, 7};
-//        fillArray(arr2, -1);
+        int[] arr2 = {5, 4, 3, 2, 1};
+        int[] arr3 = {1, 2, 3, 4, 5, 6};
+//        sumArrays(arr1, arr2, arr3);
 
-//        int[] arr3 = {1, 2, 3, 4, 5, 6, 7};
-//        increaseElements(arr3, 10);
-
-//        int[] arr4 = {1, 2, 3, 4, 5, 6, 7};
-//        compareArrayHalves(arr4);
-
-//        int[] arr5 = {1, 2, 3, 4, 5, 6, 7};
-//        int[] arr6 = {5, 4, 3, 2, 1};
-//        int[] arr7 = {1, 2, 3, 4, 5, 6};
-//        sumArrays(arr5, arr6, arr7);
-
-//        int[] arr8 = {1, 2, 3, 4, 5, 6, 7};
-//        int[] arr9 = {5, 4, 3, 2, 1};
-//        System.out.println(checkOrder(arr8, SortOrder.ASC));
-//        System.out.println(checkOrder(arr9, SortOrder.DESC));
+        int[] arr4 = {5, 4, 3, 2, 1};
+//        System.out.println(checkOrder(arr3, SortOrder.ASC));
+//        System.out.println(checkOrder(arr4, SortOrder.DESC));
 
         int[] arr10 = {5, 4, 3, 2, 1};
         int[] arr11 = {1, 2, 3, 4, 5, 6};
-        revertArray(arr10);
-        revertArray(arr11);
+//        revertArray(arr10);
+//        revertArray(arr11);
     }
 
     public static void printNTimes(int num, String str) {
