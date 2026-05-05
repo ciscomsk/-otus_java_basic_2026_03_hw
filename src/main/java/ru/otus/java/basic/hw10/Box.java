@@ -45,6 +45,7 @@ public class Box {
         return state;
     }
 
+    // info
     public void showInfo() {
         System.out.printf("""
                 length: %d, width: %d, height: %d
@@ -56,22 +57,23 @@ public class Box {
     }
 
     public void open() {
-        if (state == BoxState.CLOSED) {
-            state = BoxState.OPEN;
-            System.out.println("Коробка открыта");
+        if (state == BoxState.OPEN) {
+            System.out.println("Коробка уже открыта");
             return;
         }
 
-        System.out.println("Коробка уже открыта");
+        state = BoxState.OPEN;
+        System.out.println("Коробка открыта");
     }
 
     public void close() {
-        if (state == BoxState.OPEN) {
-            System.out.println("Коробка закрыта");
+        if (state == BoxState.CLOSED) {
+            System.out.println("Коробка уже закрыта");
             return;
         }
 
-        System.out.println("Коробка уже закрыта");
+        state = BoxState.CLOSED;
+        System.out.println("Коробка закрыта");
     }
 
     // лучше open() + close()

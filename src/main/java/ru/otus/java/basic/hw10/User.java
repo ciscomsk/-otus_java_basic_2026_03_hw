@@ -55,6 +55,7 @@ public class User {
         this.email = email;
     }
 
+    // info
     public void showInfo() {
         System.out.printf("""
                 ФИО: %s %s %s

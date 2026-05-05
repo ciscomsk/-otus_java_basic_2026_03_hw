@@ -46,7 +46,9 @@ public class Main {
         box.drop();
         box.put(drill);
         box.put(hammer);
+        box.showInfo();
         box.drop();
         box.setState(BoxState.CLOSED);
+        box.showInfo();
     }
 }
