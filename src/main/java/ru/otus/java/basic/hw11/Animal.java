@@ -6,7 +6,7 @@ public abstract class Animal {
     String name;
     int endurance;
     int runSpeed;
-//    boolean tiredness;
+    //    boolean tiredness;
     AnimalState state;
 
     public Animal(String name, int endurance, int runSpeed) {
@@ -18,28 +18,26 @@ public abstract class Animal {
 
     // moveType лучше сделать enum
     int move(int distance, String moveType, int moveSpeed, int enduranceConsumption) {
-        if (state == AnimalState.TIRED) { // if (tiredness)
+        if (state == AnimalState.TIRED) {
             info();
             return -1;
         }
 
-        int estimated_consumption = distance * enduranceConsumption;
-        // можно int consumption = Math.min(distance * enduranceConsumption, endurance);
-        int real_consumption = Math.min(estimated_consumption, endurance);
-        endurance -= real_consumption;
+        int requiredEndurance = Math.min(distance * enduranceConsumption, endurance);
+        endurance -= requiredEndurance;
         if (endurance == 0) {
-            state = AnimalState.TIRED; // tiredness = true
+            state = AnimalState.TIRED;
         }
-        float passed_distance = (float) real_consumption / enduranceConsumption;
-        float time_spent = passed_distance / moveSpeed;
+        float passedDistance = (float) requiredEndurance / enduranceConsumption;
+        float timeSpent = passedDistance / moveSpeed;
 
-        System.out.println(name + " " + moveType + " " + passed_distance + "m из " + distance + "m за " + time_spent + "c");
+        System.out.println(name + " " + moveType + " " + passedDistance + "m из " + distance + "m за " + timeSpent + "c");
         info();
-        if (state == AnimalState.TIRED) { //  if (tiredness)
+        if (state == AnimalState.TIRED) {
             return -1;
         }
 
-        return (int) time_spent;
+        return (int) timeSpent;
     }
 
     public int run(int distance) {
