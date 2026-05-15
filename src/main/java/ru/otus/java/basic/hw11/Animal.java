@@ -24,6 +24,7 @@ public abstract class Animal {
         }
 
         int estimated_consumption = distance * enduranceConsumption;
+        // можно int consumption = Math.min(distance * enduranceConsumption, endurance);
         int real_consumption = Math.min(estimated_consumption, endurance);
         endurance -= real_consumption;
         if (endurance == 0) {
