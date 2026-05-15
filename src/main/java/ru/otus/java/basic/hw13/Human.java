@@ -14,11 +14,6 @@ public class Human implements Movable {
     public int getEndurance() {
         return endurance;
     }
-
-//    public void setEndurance(int endurance) {
-//        this.endurance = endurance;
-//    }
-
     @Override
     public String toString() {
         return "Human{" +
@@ -43,7 +38,7 @@ public class Human implements Movable {
             return;
         }
 
-        // как вариант - передавать owner - boolean move(int distance, TerritoryTypes territory, User user)
+        // как вариант - передавать owner - boolean move(int distance, TerritoryTypes territory, Human human)
         if (transport instanceof Bicycle bc) {
             bc.setOwner(this);
         }

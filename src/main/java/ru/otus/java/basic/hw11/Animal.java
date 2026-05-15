@@ -6,7 +6,7 @@ public abstract class Animal {
     String name;
     int endurance;
     int runSpeed;
-    //    boolean tiredness;
+//    boolean tiredness;
     AnimalState state;
 
     public Animal(String name, int endurance, int runSpeed) {
