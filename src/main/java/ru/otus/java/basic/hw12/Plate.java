@@ -16,7 +16,7 @@ public class Plate {
     public void addFood(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount < 0"); // v1
-//            return; // v2
+//            return; // v2 + логирование
         }
 
         currentAmount = Math.min(amount + currentAmount, maxAmount);
@@ -27,7 +27,7 @@ public class Plate {
             throw new IllegalArgumentException("amount < 0"); // v1
         }
 
-        if (amount > currentAmount) { // v2 - if (amount > currentCapacity || amount < 0)
+        if (amount > currentAmount) { // v2 - if (amount > currentCapacity || amount < 0) + логирование
             return false;
         }
 
