@@ -23,6 +23,11 @@ public class App {
     }
 
     public static void listTextFiles() {
+        // io
+//        File[] files = new File(".").listFiles(f -> f.isFile() && f.getName().endsWith(".txt"));
+//        System.out.println(Arrays.stream(files).map(File::getName).toList());
+
+        // nio
         try (Stream<Path> files = Files.list(Path.of("."))) {
             List<Path> textFiles = files
                     .filter(p -> Files.isRegularFile(p) && p.toString().endsWith(".txt"))
