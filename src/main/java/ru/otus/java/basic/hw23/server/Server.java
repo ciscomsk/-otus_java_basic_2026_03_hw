@@ -49,7 +49,7 @@ public class Server {
             return;
         }
 
-        receiver.sendMessage(username + " [private]: " + message);
+        receiver.sendMessage(sender.getUsername() + " [private]: " + message);
         sender.sendMessage("[private " + username + "]: " + message);
     }
 }
