@@ -12,7 +12,7 @@ public class Server {
 
     public Server(int port) {
         this.port = port;
-        clients = new ConcurrentHashMap<>();
+        clients = new ConcurrentHashMap<>(); // !!! ConcurrentHashMap не работает с null
     }
 
     public void start() {
