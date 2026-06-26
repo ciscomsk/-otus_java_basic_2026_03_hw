@@ -21,8 +21,7 @@ public class Server {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                ClientHandler handler = new ClientHandler(socket, this);
-                subscribe(handler);
+                subscribe(new ClientHandler(socket, this));
             }
 
         } catch (IOException e) {
