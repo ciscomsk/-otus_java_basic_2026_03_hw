@@ -17,11 +17,11 @@ public class ClientHandler {
         this.in = new DataInputStream(socket.getInputStream());
         this.out = new DataOutputStream(socket.getOutputStream());
         this.server = server;
+        this.username = "user_" + socket.getPort();
 
         new Thread(() -> {
             try {
                 System.out.println("Client connected " + socket.getPort());
-                setUsername("user_" + socket.getPort());
 
                 while (true) {
                     String message = in.readUTF();
@@ -32,8 +32,10 @@ public class ClientHandler {
                             break;
                         }
 
-                        // hw
-                        String[] tokens = message.split(" ", 3);
+                        if (message.startsWith("/w")) {
+                            String[] tokens = message.split("\\s+", 3);
+                            server.sendPrivateMessage(this, tokens[1], tokens[2]);
+                        }
                     } else {
                         server.broadcastMessage(username + ": " + message);
                     }
@@ -48,10 +50,6 @@ public class ClientHandler {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void sendMessage(String message) {

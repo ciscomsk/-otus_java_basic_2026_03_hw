@@ -3,16 +3,16 @@ package ru.otus.java.basic.hw23.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
     private int port;
-    private List<ClientHandler> clients;
+    private Map<String, ClientHandler> clients;
 
     public Server(int port) {
         this.port = port;
-        clients = new CopyOnWriteArrayList<>(); // тк работаем в многопоточной среде (лучше чем synchronized)
+        clients = new ConcurrentHashMap<>();
     }
 
     public void start() {
@@ -21,7 +21,8 @@ public class Server {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                subscribe(new ClientHandler(socket, this));
+                ClientHandler handler = new ClientHandler(socket, this);
+                subscribe(handler);
             }
 
         } catch (IOException e) {
@@ -30,21 +31,26 @@ public class Server {
     }
 
     public void subscribe(ClientHandler client) {
-        clients.add(client);
+        clients.put(client.getUsername(), client);
     }
 
     public void unsubscribe(ClientHandler client) {
         broadcastMessage(String.format("Client %s exit", client.getUsername()));
-        clients.remove(client);
+        clients.remove(client.getUsername());
     }
 
     public void broadcastMessage(String message) {
-        for (ClientHandler c : clients) {
-            c.sendMessage(message);
-        }
+        clients.values().forEach(c -> c.sendMessage(message));
     }
 
-    // hw
-    public void privateMessage() {
+    public void sendPrivateMessage(ClientHandler sender, String username, String message) {
+        ClientHandler receiver = clients.get(username);
+        if (receiver == null) {
+            sender.sendMessage("User with name " + username + " not found");
+            return;
+        }
+
+        receiver.sendMessage(username + " [private]: " + message);
+        sender.sendMessage("[private " + username + "]: " + message);
     }
 }
