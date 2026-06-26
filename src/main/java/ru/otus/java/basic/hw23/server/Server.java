@@ -45,7 +45,7 @@ public class Server {
     public void sendPrivateMessage(ClientHandler sender, String username, String message) {
         ClientHandler receiver = clients.get(username);
         if (receiver == null) {
-            sender.sendMessage("User with name " + username + " not found");
+            sender.sendMessage("User with name: " + username + " - not found");
             return;
         }
 
