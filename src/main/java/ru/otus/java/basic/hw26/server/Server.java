@@ -3,6 +3,7 @@ package ru.otus.java.basic.hw26.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -11,10 +12,10 @@ public class Server {
     private List<ClientHandler> clients;
     private AuthenticationProvider authenticationProvider;
 
-    public Server(int port) {
+    public Server(int port) throws SQLException {
         this.port = port;
         this.clients = new CopyOnWriteArrayList<>();
-        this.authenticationProvider = new InMemoryAuthenticationProvider(this);
+        this.authenticationProvider = new DBAuthenticationProvider(this);
     }
 
     public AuthenticationProvider getAuthenticationProvider() {
