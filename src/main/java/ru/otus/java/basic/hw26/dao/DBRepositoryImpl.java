@@ -8,7 +8,7 @@ public class DBRepositoryImpl implements DBRepository {
     private static final String DB_PASSWORD = "password";
 
     private static final String USER_DDL1_QUERY = """
-            DROP TABLE IF EXISTS "user" """;
+            DROP TABLE IF EXISTS "user";""";
 
     private static final String USER_DDL2_QUERY = """
             CREATE TABLE IF NOT EXISTS "user"
@@ -17,7 +17,7 @@ public class DBRepositoryImpl implements DBRepository {
                 login varchar(100) NOT NULL UNIQUE,
                 password varchar(100) NOT NULL,
                 username varchar(100) NOT NULL UNIQUE
-            )
+            );
             """;
 
     private static final String USER_INIT_QUERY = """
@@ -25,7 +25,7 @@ public class DBRepositoryImpl implements DBRepository {
             VALUES
                 ('qwe', 'qwe', 'qwe'),
                 ('asd', 'asd', 'asd'),
-                ('zxc', 'zxc', 'zxc')
+                ('zxc', 'zxc', 'zxc');
             """;
 
     private static final String ADD_USER_QUERY = """
@@ -36,7 +36,7 @@ public class DBRepositoryImpl implements DBRepository {
             FROM "user"
             WHERE
                 login = ?
-                AND password = ?
+                AND password = ?;
             """;
 
     private final Connection connection;
