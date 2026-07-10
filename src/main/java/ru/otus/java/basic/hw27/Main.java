@@ -1,7 +1,5 @@
 package ru.otus.java.basic.hw27;
 
-import ru.otus.java.basic.hw3.App;
-
 public class Main {
     public static void main(String[] args) {
         Fruit f = new Fruit(10);
