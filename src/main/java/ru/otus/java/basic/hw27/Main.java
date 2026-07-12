@@ -47,10 +47,14 @@ public class Main {
 
         System.out.println(fBox1.compare(fBox2));
         System.out.println(fBox1.compare(aBox1));
+        System.out.println(oBox.compare(aBox1));
 
         fBox1.transfer(fBox2);
         System.out.println(fBox1);
         System.out.println(fBox2);
 //        fBox1.transfer(aBox1);
+        oBox.transfer(fBox2);
+        System.out.println(oBox);
+        System.out.println(fBox2);
     }
 }

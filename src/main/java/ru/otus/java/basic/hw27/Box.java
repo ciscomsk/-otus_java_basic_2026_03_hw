@@ -18,11 +18,12 @@ public class Box<T extends Fruit> {
         return fruits.stream().mapToInt(Fruit::getWeight).sum();
     }
 
-    public boolean compare(Box<? extends T> other) {
+    // тип уже ограничен в определении класса - T extends Fruit, поэтому достаточно ? (вместо T extends Fruit)
+    public boolean compare(Box<?> other) {
         return this.getWeight() == other.getWeight();
     }
 
-    public void transfer(Box<T> target) {
+    public void transfer(Box<? super T> target) {
         target.fruits.addAll(this.fruits);
         this.fruits.clear();
     }
