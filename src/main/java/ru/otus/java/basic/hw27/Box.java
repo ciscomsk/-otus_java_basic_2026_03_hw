@@ -18,7 +18,12 @@ public class Box<T extends Fruit> {
         return fruits.stream().mapToInt(Fruit::getWeight).sum();
     }
 
-    // тип уже ограничен в определении класса - T extends Fruit, поэтому достаточно ? (вместо ? extends Fruit)
+    /*
+        !!!
+        <?> - можно передать любой класс
+        здесь достаточно ? тк есть ограничения в классе - <T extends Fruit>, те другой тип пы просто не сможем создать
+        если бы в классе не было этого ограничения - нужно было бы прописать ограничение в методе - <? extends Fruit>
+     */
     public boolean compare(Box<?> other) {
         return this.getWeight() == other.getWeight();
     }
