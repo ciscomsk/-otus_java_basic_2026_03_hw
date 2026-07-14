@@ -18,7 +18,7 @@ public class Box<T extends Fruit> {
         return fruits.stream().mapToInt(Fruit::getWeight).sum();
     }
 
-    // тип уже ограничен в определении класса - T extends Fruit, поэтому достаточно ? (вместо T extends Fruit)
+    // тип уже ограничен в определении класса - T extends Fruit, поэтому достаточно ? (вместо ? extends Fruit)
     public boolean compare(Box<?> other) {
         return this.getWeight() == other.getWeight();
     }
