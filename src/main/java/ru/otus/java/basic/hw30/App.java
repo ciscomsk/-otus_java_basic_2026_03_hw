@@ -25,6 +25,8 @@ public class App {
                         wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+//                        Thread.currentThread().interrupt();
+//                        return;
                     }
                 }
 
