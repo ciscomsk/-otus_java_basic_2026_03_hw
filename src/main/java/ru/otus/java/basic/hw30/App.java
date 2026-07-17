@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 public class App {
     public static final int PRINT_COUNT = 5;
 
-    private int currenTurn = 0;
+    private int currentTurn = 0;
 
     public static void main(String[] args) {
         App app = new App();
@@ -20,7 +20,7 @@ public class App {
     public /*synchronized*/ void printLetter(char letter, int myTurn) { // v1
         for (int i = 0; i < PRINT_COUNT; i++) {
             synchronized (this) { // v2
-                while (currenTurn != myTurn) {
+                while (currentTurn != myTurn) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
@@ -29,7 +29,7 @@ public class App {
                 }
 
                 System.out.print(letter);
-                currenTurn = (currenTurn + 1) % 3;
+                currentTurn = (currentTurn + 1) % 3;
                 notifyAll();
             }
         }
