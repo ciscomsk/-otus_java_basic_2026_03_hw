@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class App {
-    public static final int PRINT_COUNT = 5;
+    private static final int PRINT_COUNT = 5;
 
     private int currentTurn = 0;
 
