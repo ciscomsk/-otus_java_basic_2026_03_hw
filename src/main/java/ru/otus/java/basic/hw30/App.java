@@ -5,12 +5,13 @@ import java.util.concurrent.Executors;
 
 public class App {
     private static final int PRINT_COUNT = 5;
+    private static final int THREADS_COUNT = 5;
 
     private int currentTurn = 0;
 
     public static void main(String[] args) {
         App app = new App();
-        try (ExecutorService pool = Executors.newFixedThreadPool(3)) {
+        try (ExecutorService pool = Executors.newFixedThreadPool(THREADS_COUNT)) {
             pool.execute(() -> app.printLetter('A', 0));
             pool.execute(() -> app.printLetter('B', 1));
             pool.execute(() -> app.printLetter('C', 2));
