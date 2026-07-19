@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 public class App {
     private static final int PRINT_COUNT = 5;
-    private static final int THREADS_COUNT = 5;
+    private static final int THREADS_COUNT = 3;
 
     private int currentTurn = 0;
 
@@ -32,7 +32,7 @@ public class App {
                 }
 
                 System.out.print(letter);
-                currentTurn = (currentTurn + 1) % 3;
+                currentTurn = (currentTurn + 1) % THREADS_COUNT;
                 notifyAll();
             }
         }
