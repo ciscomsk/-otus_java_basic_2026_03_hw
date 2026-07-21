@@ -12,7 +12,13 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
+    public static Stream<Arguments> filterArrayArgs() {
+        List<Arguments> args = new ArrayList<>();
+        args.add(Arguments.arguments(new int[]{2, 2}, new int[]{1, 2, 1, 2, 2}));
+        args.add(Arguments.arguments(new int[]{}, new int[]{2, 2, 2, 1}));
 
+        return args.stream();
+    }
 
     public static Stream<Arguments> checkArrayArgs() {
         List<Arguments> args = new ArrayList<>();
@@ -24,9 +30,10 @@ public class AppTest {
         return args.stream();
     }
 
-    @Test
-    void filterArray() {
-        assertArrayEquals(new int[]{2, 2}, App.filterArray(new int[]{1, 2, 1, 2, 2}));
+    @ParameterizedTest
+    @MethodSource("filterArrayArgs")
+    void filterArray(int[] expected, int[] origin) {
+        assertArrayEquals(expected, App.filterArray(origin));
     }
 
     @Test
