@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
     public static Stream<Arguments> filterArrayArgs() {
         List<Arguments> args = new ArrayList<>();
+        args.add(Arguments.arguments(new int[]{2, 2, 2, 2}, new int[]{1, 2, 2, 2, 2}));
         args.add(Arguments.arguments(new int[]{2, 2}, new int[]{1, 2, 1, 2, 2}));
         args.add(Arguments.arguments(new int[]{}, new int[]{2, 2, 2, 1}));
 

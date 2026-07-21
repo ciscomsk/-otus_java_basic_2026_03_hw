@@ -7,7 +7,6 @@ public class App {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(filterArray(new int[]{1, 2, 1, 2, 2})));
 //        System.out.println(Arrays.toString(filterArray(new int[]{2, 2, 2, 2})));
-        System.out.println(Arrays.toString(filterArray(new int[]{2, 2, 2, 1})));
 
         System.out.println(checkArray(new int[]{1, 2}));
         System.out.println(checkArray(new int[]{1, 1}));
