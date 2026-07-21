@@ -1,6 +1,7 @@
 package ru.otus.java.basic.hw31;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class App {
     public static void main(String[] args) {
@@ -14,14 +15,18 @@ public class App {
     }
 
     public static int[] filterArray(int[] origin) {
-        int lastIdx = -1;
-        for (int i = origin.length - 1; i >= 0; i--) {
-            if (origin[i] == 1) {
-                lastIdx = i;
-                break;
-            }
+//        int lastIdx = -1;
+//        for (int i = origin.length - 1; i >= 0; i--) {
+//            if (origin[i] == 1) {
+//                lastIdx = i;
+//                break;
+//            }
+//        }
 
-        }
+        int lastIdx = IntStream.range(0, origin.length)
+                .filter(i -> origin[i] == 1)
+                .reduce((first, second) -> second)
+                .orElse(-1);
 
         if (lastIdx == -1) {
             throw new RuntimeException("Array doesn't contain 1");
