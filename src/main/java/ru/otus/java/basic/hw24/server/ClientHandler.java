@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientHandler {
     private Socket socket;
@@ -12,6 +13,7 @@ public class ClientHandler {
     private Server server;
     private String username;
     private boolean authenticated;
+    private Role role;
 
     public ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -59,8 +61,6 @@ public class ClientHandler {
                                 break;
                             }
                         }
-
-
                     }
                 }
 
@@ -72,14 +72,30 @@ public class ClientHandler {
                             sendMessage("/exitok");
                             break;
                         }
+                    }
+                    if (message.startsWith("/kick")) {
+                        if (role != Role.ADMIN) {
+                            sendMessage("Не хватает прав для выполнения команды");
+                            continue;
+                        }
+
+                        String[] tokens = message.split(" ");
+                        if (tokens.length != 2) {
+                            sendMessage("Неверный формат команды /kick");
+                            continue;
+                        }
+
+                        server.kick(this, tokens[1]);
                     } else {
                         server.broadcastMessage(username, message);
                     }
                 }
+            } catch (SocketException e) {
+                System.out.println("Клиент отключен " + socket.getPort());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                disconnect();
+                disconnect(false);
             }
         }).start();
     }
@@ -92,6 +108,10 @@ public class ClientHandler {
         this.username = username;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public void sendMessage(String message) {
         try {
             out.writeUTF(message);
@@ -100,8 +120,8 @@ public class ClientHandler {
         }
     }
 
-    public void disconnect() {
-        server.unsubscribe(this);
+    public void disconnect(boolean forced) {
+        server.unsubscribe(this, forced);
 
         try {
             if (in != null) {

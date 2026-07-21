@@ -15,9 +15,9 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public void init() {
-        users.add(new User("qwe", "qwe", "qwe"));
-        users.add(new User("asd", "asd", "asd"));
-        users.add(new User("zxc", "zxc", "zxc"));
+        users.add(new User("qwe", "qwe", "qwe", Role.ADMIN));
+        users.add(new User("asd", "asd", "asd", Role.USER));
+        users.add(new User("zxc", "zxc", "zxc", Role.USER));
         System.out.println("Сервис аутентификации запущен в режиме InMemory");
     }
 
@@ -38,8 +38,11 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
             return false;
         }
 
-        users.add(new User(login, password, username));
+        // регистрируем только с правами USER
+        Role user = Role.USER;
+        users.add(new User(login, password, username, user));
         clientHandler.setUsername(username);
+        clientHandler.setRole(user);
         server.subscribe(clientHandler);
         clientHandler.sendMessage("/regok " + username);
 
@@ -59,7 +62,14 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
             return false;
         }
 
+        Role role = getRoleByCredentials(login, password);
+        if (role == null) {
+            clientHandler.sendMessage("Права не определены");
+            return false;
+        }
+
         clientHandler.setUsername(authUsername);
+        clientHandler.setRole(role);
         server.subscribe(clientHandler);
         clientHandler.sendMessage("/authok " + authUsername);
 
@@ -96,15 +106,27 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
         return false;
     }
 
+    private Role getRoleByCredentials(String login, String password) {
+        for (User u : users) {
+            if (u.login.equals(login) && u.password.equals(password)) {
+                return u.role;
+            }
+        }
+
+        return null;
+    }
+
     private class User {
         private String login;
         private String password;
         private String username;
+        private Role role;
 
-        public User(String login, String password, String username) {
+        public User(String login, String password, String username, Role role) {
             this.login = login;
             this.password = password;
             this.username = username;
+            this.role = role;
         }
     }
 }
