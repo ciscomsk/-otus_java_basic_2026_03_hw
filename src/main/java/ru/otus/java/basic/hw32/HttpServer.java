@@ -26,10 +26,12 @@ public class HttpServer {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                pool.execute(() -> new RequestHandler(socket, dispatcher));
+                pool.execute(() -> new RequestHandler(socket, dispatcher).handle());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        pool.shutdown();
     }
 }
