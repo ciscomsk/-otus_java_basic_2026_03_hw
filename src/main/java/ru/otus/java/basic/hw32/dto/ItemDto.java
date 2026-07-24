@@ -8,8 +8,8 @@ public class ItemDto {
     public ItemDto() {
     }
 
-    public ItemDto(long id, String title, int price) {
-        this.is = id;
+    public ItemDto(long is, String title, int price) {
+        this.is = is;
         this.title = title;
         this.price = price;
     }
