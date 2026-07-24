@@ -1,7 +1,7 @@
 package ru.otus.java.basic.hw32.dto;
 
 public class ItemDto {
-    private long id;
+    private long is;
     private String title;
     private int price;
 
@@ -9,17 +9,17 @@ public class ItemDto {
     }
 
     public ItemDto(long id, String title, int price) {
-        this.id = id;
+        this.is = id;
         this.title = title;
         this.price = price;
     }
 
     public long getIs() {
-        return id;
+        return is;
     }
 
     public void setIs(long id) {
-        this.id = id;
+        this.is = id;
     }
 
     public String getTitle() {
