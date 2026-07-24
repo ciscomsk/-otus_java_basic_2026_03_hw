@@ -1,25 +1,25 @@
 package ru.otus.java.basic.hw32.dto;
 
 public class ItemDto {
-    private long is;
+    private long id;
     private String title;
     private int price;
 
     public ItemDto() {
     }
 
-    public ItemDto(long is, String title, int price) {
-        this.is = is;
+    public ItemDto(long id, String title, int price) {
+        this.id = id;
         this.title = title;
         this.price = price;
     }
 
     public long getIs() {
-        return is;
+        return id;
     }
 
-    public void setIs(long is) {
-        this.is = is;
+    public void setIs(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
