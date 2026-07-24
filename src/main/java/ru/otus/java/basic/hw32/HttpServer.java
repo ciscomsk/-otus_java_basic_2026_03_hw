@@ -30,8 +30,8 @@ public class HttpServer {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            pool.shutdown();
         }
-
-        pool.shutdown();
     }
 }
