@@ -19,7 +19,7 @@ public class ItemDto {
     }
 
     public void setIs(long id) {
-        this.is = id;
+        this.is = is;
     }
 
     public String getTitle() {
