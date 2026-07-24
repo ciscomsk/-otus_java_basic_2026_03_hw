@@ -18,7 +18,7 @@ public class ItemDto {
         return is;
     }
 
-    public void setIs(long id) {
+    public void setIs(long is) {
         this.is = is;
     }
 
