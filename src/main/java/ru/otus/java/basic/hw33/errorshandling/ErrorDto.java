@@ -1,0 +1,42 @@
+package ru.otus.java.basic.hw33.errorshandling;
+
+import java.time.LocalDateTime;
+
+public class ErrorDto {
+    private String code;
+    private String description;
+    private String datetime;
+
+    public ErrorDto() {
+    }
+
+    public ErrorDto(String code, String description) {
+        this.code = code;
+        this.description = description;
+        this.datetime = LocalDateTime.now().toString();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+}
