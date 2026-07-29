@@ -3,32 +3,35 @@ package ru.otus.java.basic.hw32;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HttpServer {
     private int port;
     private Dispatcher dispatcher;
+    private int poolSize;
 
-    public HttpServer(int port) {
+    public HttpServer(int port, int poolSize) {
         this.port = port;
         this.dispatcher = new Dispatcher();
+        this.poolSize = poolSize;
     }
 
     public void start() {
+        ExecutorService pool = Executors.newFixedThreadPool(poolSize);
+
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             System.out.println("Ожидаем подключения");
-            try (Socket socket = serverSocket.accept()) {
-                System.out.println("Получено входящее подключение");
-                byte[] buffer = new byte[8192];
-                int n = socket.getInputStream().read(buffer);
-                String rawRequest = new String(buffer, 0, n);
-                HttpRequest request = new HttpRequest(rawRequest);
-                request.info(true);
 
-                dispatcher.execute(request, socket.getOutputStream());
+            while (true) {
+                Socket socket = serverSocket.accept();
+                pool.execute(() -> new RequestHandler(socket, dispatcher).handle());
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            pool.shutdown();
         }
     }
 }
