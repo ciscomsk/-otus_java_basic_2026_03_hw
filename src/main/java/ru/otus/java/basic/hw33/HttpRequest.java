@@ -1,18 +1,26 @@
 package ru.otus.java.basic.hw33;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest {
+    private static final Logger logger = LogManager.getLogger(HttpRequest.class);
+
     private String rawRequest;
     private HttpMethod httpMethod;
     private String uri;
+    private Map<String, String> headers;
     private String body;
     private Map<String, String> params;
 
     public HttpRequest(String rawRequest) {
         this.rawRequest = rawRequest;
         this.params = new HashMap<>();
+        this.headers = new HashMap<>();
         parse();
     }
 
@@ -34,12 +42,13 @@ public class HttpRequest {
 
     public void info(boolean showRawRequest) {
         if (showRawRequest) {
-            System.out.println(rawRequest);
+            logger.info(rawRequest);
         }
 
-        System.out.println("HTTP METHOD: " + httpMethod);
-        System.out.println("URI: " + uri);
-        System.out.println("PARAMS: " + params);
+        logger.info("HTTP METHOD: " + httpMethod);
+        logger.info("URI: " + uri);
+        logger.info("HEADERS: " + headers);
+        logger.info("PARAMS: " + params);
     }
 
     public boolean containsParam(String key) {
@@ -51,6 +60,14 @@ public class HttpRequest {
         int end = rawRequest.indexOf(" ", start + 1);
         httpMethod = HttpMethod.valueOf(rawRequest.substring(0, start));
         uri = rawRequest.substring(start + 1, end);
+
+
+        String rawHeaders = rawRequest.substring(rawRequest.indexOf("\r\n") + 2, rawRequest.indexOf("\r\n\r\n"));
+        String[] headersArr = rawHeaders.split("\r\n");
+        for (String header : headersArr) {
+            String[] headerKV = header.split(": ", 2);
+            headers.put(headerKV[0], headerKV[1]);
+        }
 
         if (uri.contains("?")) {
             String[] tokens = uri.split("[?]");

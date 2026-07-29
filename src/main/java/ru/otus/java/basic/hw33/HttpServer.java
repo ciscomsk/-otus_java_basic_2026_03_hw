@@ -1,5 +1,8 @@
 package ru.otus.java.basic.hw33;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,6 +10,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HttpServer {
+    private static final Logger logger = LogManager.getLogger(HttpServer.class);
+
     private int port;
     private Dispatcher dispatcher;
     private ExecutorService executorService;
@@ -19,21 +24,21 @@ public class HttpServer {
 
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Сервер запущен на порту: " + port);
-            System.out.println("Ожидаем подключения");
+            logger.info("Сервер запущен на порту: " + port);
+            logger.info("Ожидаем подключения");
 
             while (true) {
                 Socket socket = serverSocket.accept();
                 executorService.execute(() -> executeRequest(socket));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
     }
 
     private void executeRequest(Socket socket) {
         try (socket) {
-            System.out.println("Получено входящее подключение");
+            logger.info("Получено входящее подключение");
             byte[] buffer = new byte[8192];
             int n = socket.getInputStream().read(buffer);
             if (n < 0) {
@@ -46,7 +51,7 @@ public class HttpServer {
 
             dispatcher.execute(request, socket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
 
     }

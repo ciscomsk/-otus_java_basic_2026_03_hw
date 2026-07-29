@@ -1,6 +1,7 @@
 package ru.otus.java.basic.hw33.app;
 
 import ru.otus.java.basic.hw33.app.dto.ItemDto;
+import ru.otus.java.basic.hw33.errorshandling.BusinessLogicException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,5 +33,12 @@ public class ItemsService {
         items.add(itemDto);
 
         return itemDto;
+    }
+
+    public void deleteById(long id) {
+        boolean removed = items.removeIf(i -> i.getId() == id);
+        if (!removed) {
+            throw new BusinessLogicException("ITEM_NOT_FOUND", "Товар с id = " + id + "не найден");
+        }
     }
 }
