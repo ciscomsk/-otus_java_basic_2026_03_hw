@@ -78,6 +78,16 @@ public class HttpRequest {
                 String[] keyValue = p.split("=", 2);
                 params.put(keyValue[0], keyValue[1]);
             }
+        } else {
+            long nSlash = uri.chars().filter(c -> c == '/').count();
+            if (nSlash > 1) {
+                String maybePathVar = uri.substring(uri.lastIndexOf('/') + 1);
+                boolean isNumeric = maybePathVar.chars().allMatch(Character::isDigit);
+                if (isNumeric) {
+                    uri = uri.substring(0, uri.lastIndexOf('/'));
+                    params.put("pathVariable", maybePathVar);
+                }
+            }
         }
 
         if (httpMethod == HttpMethod.POST) {
