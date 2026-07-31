@@ -24,7 +24,7 @@ public class HttpServer {
 
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            logger.info("Сервер запущен на порту: " + port);
+            logger.info("Сервер запущен на порту: {}", port);
             logger.info("Ожидаем подключения");
 
             while (true) {
@@ -32,7 +32,7 @@ public class HttpServer {
                 executorService.execute(() -> executeRequest(socket));
             }
         } catch (IOException e) {
-            logger.warn(e);
+            logger.error(e);
         }
     }
 
@@ -47,11 +47,11 @@ public class HttpServer {
 
             String rawRequest = new String(buffer, 0, n);
             HttpRequest request = new HttpRequest(rawRequest);
-            request.info(true);
+            request.info();
 
             dispatcher.execute(request, socket.getOutputStream());
         } catch (IOException e) {
-            logger.warn(e);
+            logger.error(e);
         }
 
     }

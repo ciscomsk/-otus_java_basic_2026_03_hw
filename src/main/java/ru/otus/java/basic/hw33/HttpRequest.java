@@ -16,10 +16,12 @@ public class HttpRequest {
     private Map<String, String> headers;
     private String body;
     private Map<String, String> params;
+    private Map<String, String> pathVars;
 
     public HttpRequest(String rawRequest) {
         this.rawRequest = rawRequest;
         this.params = new HashMap<>();
+        this.pathVars = new HashMap<>();
         this.headers = new HashMap<>();
         parse();
     }
@@ -40,10 +42,12 @@ public class HttpRequest {
         return params.get(key);
     }
 
-    public void info(boolean showRawRequest) {
-        if (showRawRequest) {
-            logger.info(rawRequest);
-        }
+    public String getPathVar(String key) {
+        return pathVars.get(key);
+    }
+
+    public void info() {
+        logger.debug(rawRequest);
 
         logger.info("HTTP METHOD: " + httpMethod);
         logger.info("URI: " + uri);
@@ -85,7 +89,7 @@ public class HttpRequest {
                 boolean isNumeric = maybePathVar.chars().allMatch(Character::isDigit);
                 if (isNumeric) {
                     uri = uri.substring(0, uri.lastIndexOf('/'));
-                    params.put("pathVariable", maybePathVar);
+                    pathVars.put("pathVariable", maybePathVar);
                 }
             }
         }

@@ -16,7 +16,7 @@ public class DeleteItemProcessor implements RequestProcessor {
 
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
-        itemsService.deleteById(Integer.parseInt(request.getParam("pathVariable")));
+        itemsService.deleteById(Integer.parseInt(request.getPathVar("pathVariable")));
 
         String response =
                 """
