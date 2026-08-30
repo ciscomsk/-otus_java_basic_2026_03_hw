@@ -24,7 +24,7 @@ public class Server {
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server started on port: " + port);
-            System.out.println("Server started on port: " + port);
+
 
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -40,9 +40,20 @@ public class Server {
         clients.add(client);
     }
 
-    public void unsubscribe(ClientHandler client) {
-        broadcastMessage("admin", String.format("Client %s exit", client.getUsername()));
+    public void unsubscribe(ClientHandler client, boolean forced) {
+        String msg = (forced) ? "Пользователь %s был отключен" : "Пользователь %s вышел";
+        broadcastMessage("admin", String.format(msg, client.getUsername()));
         clients.remove(client);
+    }
+
+    public void kick(ClientHandler sender, String username) {
+        ClientHandler client = getHandlerByUsername(username);
+        if (client == null) {
+            sender.sendMessage("Пользователь: " + username + " - не найден");
+            return;
+        }
+
+        client.disconnect(true);
     }
 
     public void broadcastMessage(String sender, String message) {
@@ -61,5 +72,15 @@ public class Server {
         }
 
         return false;
+    }
+
+    private ClientHandler getHandlerByUsername(String username) {
+        for (ClientHandler c : clients) {
+            if (c.getUsername().equals(username)) {
+                return c;
+            }
+        }
+
+        return null;
     }
 }
